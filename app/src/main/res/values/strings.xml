@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Clock Display</string>
+    <string name="text_size">Text Size (sp)</string>
+    <string name="enable_random_shift">Enable Random Text Shift</string>
+    <string name="shift_horizontal">Maximum Horizontal Shift (px)</string>
+    <string name="shift_vertical">Maximum Vertical Shift (px)</string>
+</resources>

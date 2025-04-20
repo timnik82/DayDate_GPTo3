@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="random_shift_enabled"
+        android:title="Enable Random Shift"
+        android:defaultValue="false" />
+
+    <SeekBarPreference
+        android:key="shift_x"
+        android:title="Max Shift X"
+        android:defaultValue="0"
+        android:max="100" />
+
+    <SeekBarPreference
+        android:key="shift_y"
+        android:title="Max Shift Y"
+        android:defaultValue="0"
+        android:max="100" />
+
+    <SeekBarPreference
+        android:key="text_size_sp"
+        android:title="Text Size (sp)"
+        android:defaultValue="48"
+        android:max="200" />
+</PreferenceScreen>
