@@ -13,27 +13,97 @@
             style="@style/TextAppearance.AppCompat.Medium"
             android:text="@string/text_size"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@android:color/white" />
 
         <SeekBar
             android:id="@+id/seek_text_size"
-            android:max="120"
+            android:max="250"
+            android:min="144"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:text="Font Style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingTop="30dp"
+            android:textColor="@android:color/white" />
+
+        <Spinner
+            android:id="@+id/spinner_font_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.AppCompat.Spinner.DropDown"
+            android:popupBackground="@android:color/darker_gray" />
 
         <Switch
             android:id="@+id/switch_random_shift"
             android:text="@string/enable_random_shift"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="24dp" />
+            android:textSize="20sp"
+            android:paddingTop="30dp"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:text="Shift Interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:paddingTop="20dp"
+            android:textColor="@android:color/white" />
+
+        <RadioGroup
+            android:id="@+id/radio_shift_interval"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radio_3s"
+                android:text="3 seconds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@android:color/white" />
+
+            <RadioButton
+                android:id="@+id/radio_1min"
+                android:text="1 minute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@android:color/white" />
+
+            <RadioButton
+                android:id="@+id/radio_5min"
+                android:text="5 minutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@android:color/white" />
+
+            <RadioButton
+                android:id="@+id/radio_10min"
+                android:text="10 minutes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@android:color/white" />
+        </RadioGroup>
 
         <TextView
             style="@style/TextAppearance.AppCompat.Medium"
             android:text="@string/shift_horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp" />
+            android:textSize="20sp"
+            android:paddingTop="20dp"
+            android:textColor="@android:color/white" />
 
         <SeekBar
             android:id="@+id/seek_shift_x"
@@ -46,7 +116,9 @@
             android:text="@string/shift_vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="16dp" />
+            android:textSize="20sp"
+            android:paddingTop="20dp"
+            android:textColor="@android:color/white" />
 
         <SeekBar
             android:id="@+id/seek_shift_y"

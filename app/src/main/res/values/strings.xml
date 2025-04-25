@@ -1,7 +1,16 @@
 <resources>
-    <string name="app_name">Clock Display</string>
-    <string name="text_size">Text Size (sp)</string>
-    <string name="enable_random_shift">Enable Random Text Shift</string>
+    <string name="app_name">DayDate_GPTo3</string>
+    <string name="text_size">Text Size</string>
+    <string name="random_shift">Random Text Shift</string>
+    <string name="font_style">Font Style</string>
+    <string-array name="font_styles">
+        <item>Default</item>
+        <item>Monospace</item>
+        <item>Sans Serif</item>
+        <item>Serif</item>
+        <item>Condensed</item>
+    </string-array>
+    <string name="enable_random_shift">Enable Random Text Shift</string>
     <string name="shift_horizontal">Maximum Horizontal Shift (px)</string>
     <string name="shift_vertical">Maximum Vertical Shift (px)</string>
 </resources>

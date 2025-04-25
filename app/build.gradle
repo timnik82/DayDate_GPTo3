@@ -11,11 +11,11 @@ configurations.all {
 }
 
 android {
-    namespace 'com.example.clockdisplay'
+    namespace 'com.example.daydate_gpto3'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.clockdisplay"
+        applicationId "com.example.daydate_gpto3"
         minSdk 21
         targetSdk 33
         versionCode 1

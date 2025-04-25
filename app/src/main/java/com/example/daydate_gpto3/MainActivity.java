@@ -1,6 +1,7 @@
-package com.example.clockdisplay;
+package com.example.daydate_gpto3;
 
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import androidx.preference.PreferenceManager;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.preference.PreferenceFragmentCompat;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,9 +27,15 @@ public class MainActivity extends AppCompatActivity {
     private TextView clockText;
 
     private final Handler handler = new Handler();
-    private final SimpleDateFormat fmtDay  = new SimpleDateFormat("EEEE", Locale.getDefault());
-    private final SimpleDateFormat fmtDate = new SimpleDateFormat("MMMM d, yyyy", Locale.getDefault());
-    private final SimpleDateFormat fmtTime = new SimpleDateFormat("h:mm a", Locale.getDefault());
+    private final SimpleDateFormat fmtDay  = new SimpleDateFormat("EEEE", new Locale("pt", "PT")) {
+        @Override
+        public StringBuffer format(Date date, StringBuffer toAppendTo, java.text.FieldPosition pos) {
+            String result = super.format(date, toAppendTo, pos).toString();
+            return new StringBuffer(result.substring(0, 1).toUpperCase() + result.substring(1));
+        }
+    };
+    private final SimpleDateFormat fmtDate = new SimpleDateFormat("MMMM d, yyyy", new Locale("pt", "PT"));
+    private final SimpleDateFormat fmtTime = new SimpleDateFormat("h:mm", new Locale("pt", "PT"));
 
     private SharedPreferences prefs;
     private final Random random = new Random();
@@ -44,7 +50,9 @@ public class MainActivity extends AppCompatActivity {
     private final Runnable shiftRunnable = new Runnable() {
         @Override public void run() {
             applyRandomShift();
-            handler.postDelayed(this, SHIFT_INTERVAL_MS);
+            // Get the current interval from preferences
+            long interval = prefs.getInt("shift_interval_ms", 60000);
+            handler.postDelayed(this, interval);
         }
     };
 
@@ -59,10 +67,9 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
-        // Inject the settings fragment into BOTH side‑drawers so either edge‑swipe works
+        // Add settings fragment to the left drawer
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.left_drawer,  new SettingsFragment())
-                .replace(R.id.right_drawer, new SettingsFragment())
+                .replace(R.id.left_drawer, new SettingsFragment())
                 .commit();
 
         // Apply initial user prefs
@@ -72,7 +79,14 @@ public class MainActivity extends AppCompatActivity {
     @Override protected void onResume() {
         super.onResume();
         handler.post(clockRunnable);
-        handler.post(shiftRunnable);
+        // Re-apply prefs and start shift timer
+        applyUserPrefs();
+        handler.removeCallbacks(shiftRunnable); // Remove existing callbacks before posting new one
+        long interval = prefs.getInt("shift_interval_ms", 60000);
+        if (prefs.getBoolean("random_shift_enabled", false)) {
+            handler.postDelayed(shiftRunnable, interval);
+        }
+        goImmersive(); // Re-apply immersive mode
     }
 
     @Override protected void onPause() {
@@ -84,8 +98,6 @@ public class MainActivity extends AppCompatActivity {
     @Override public void onBackPressed() {
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
             drawerLayout.closeDrawer(GravityCompat.START);
-        } else if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
-            drawerLayout.closeDrawer(GravityCompat.END);
         } else {
             super.onBackPressed();
         }
@@ -101,13 +113,22 @@ public class MainActivity extends AppCompatActivity {
         clockText.setText(display);
     }
 
-    private void applyUserPrefs() {
-        // Text size (sp) stored as float, default 48sp
-        float sizeSp = prefs.getFloat("text_size_sp", 48f);
+    public void applyUserPrefs() {
+        // Text size (sp) stored as float, default 144sp (minimum size)
+        float sizeSp = prefs.getFloat("text_size_sp", 144f);
         clockText.setTextSize(sizeSp);
+
+        // Font Style stored as string, default "sans-serif"
+        String fontStyleName = prefs.getString("font_style", "sans-serif");
+        Typeface finalTypeface = Typeface.create(fontStyleName, Typeface.NORMAL);
+
+        clockText.setTypeface(finalTypeface);
 
         // Immediate shift if enabled
         applyRandomShift();
+
+        // Re-apply immersive mode in case interaction brought back system UI
+        goImmersive();
     }
 
     private void applyRandomShift() {
