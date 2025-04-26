@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             return new StringBuffer(result.substring(0, 1).toUpperCase() + result.substring(1));
         }
     };
-    private final SimpleDateFormat fmtDate = new SimpleDateFormat("MMMM d, yyyy", new Locale("pt", "PT"));
+    private final SimpleDateFormat fmtDate = new SimpleDateFormat("MMMM d", new Locale("pt", "PT"));
     private final SimpleDateFormat fmtTime = new SimpleDateFormat("h:mm", new Locale("pt", "PT"));
 
     private SharedPreferences prefs;
